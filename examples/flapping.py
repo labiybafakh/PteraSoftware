@@ -9,9 +9,8 @@ airplane = ps.geometry.Airplane(
             name="Main Wing",
             symmetric=True,
             num_chordwise_panels=8,
-            chordwise_spacing="cosine",
+            chordwise_spacing="uniform",
             wing_cross_sections=[
-                # Root cross section
                 ps.geometry.WingCrossSection(
                     x_le=0.0,  # Leading edge x position
                     y_le=0.0,  # Leading edge y position (root)
@@ -21,17 +20,24 @@ airplane = ps.geometry.Airplane(
                     airfoil=ps.geometry.Airfoil(name="as6095"),
                     num_spanwise_panels=4,
                 ),
-                # Mid cross section
                 ps.geometry.WingCrossSection(
                     x_le=0.0,
-                    y_le=0.15,  
+                    y_le=0.18,  
+                    z_le=0.0,
+                    chord=0.32,
+                    twist=0.0,
+                    airfoil=ps.geometry.Airfoil(name="as6095"),
+                    num_spanwise_panels=4,
+                ),
+                ps.geometry.WingCrossSection(
+                    x_le=0.0,
+                    y_le=0.3,  
                     z_le=0.0,
                     chord=0.32,
                     twist=0.0,
                     airfoil=ps.geometry.Airfoil(name="flat_plate"),
                     num_spanwise_panels=4,
                 ),
-                # Tip cross section
                 ps.geometry.WingCrossSection(
                     x_le=0.0,
                     y_le=0.75,  
@@ -44,29 +50,28 @@ airplane = ps.geometry.Airplane(
             ],
         ),
         ps.geometry.Wing(
-            name="V-Tail",
-            x_le=6.75,
-            z_le=0.25,
+            name="Tail",
+            x_le=0.45,
+            z_le=0.0,
             num_chordwise_panels=6,
-            chordwise_spacing="uniform",
+            chordwise_spacing="cosine",
             symmetric=True,
             # Define this wing's root wing cross section.
             wing_cross_sections=[
                 ps.geometry.WingCrossSection(
-                    chord=0.01,
-                    # Give the root wing cross section an airfoil.
+                    x_le=0.0,
+                    y_le=0.0,
+                    z_le=0.0,
+                    chord=0.3,
                     airfoil=ps.geometry.Airfoil(
                         name="flat_plate",
                     ),
-                    twist=5.0,  # Give the root wing cross section a twist.
                 ),
-                # Define the wing's tip wing cross section.
                 ps.geometry.WingCrossSection(
-                    x_le=0.5,
-                    y_le=2.0,
-                    z_le=1.0,
-                    chord=1.0,
-                    twist=-5.0,  # Give the tip wing cross section an airfoil.
+                    x_le=0.25,
+                    y_le=0.2,
+                    z_le=0.0,
+                    chord=0.001,
                     airfoil=ps.geometry.Airfoil(
                         name="flat_plate",
                     ),
@@ -125,7 +130,7 @@ main_wing_root_wing_cross_section_movement = ps.movement.WingCrossSectionMovemen
 
 # Define the main wing's tip wing cross section's movement.
 main_wing_tip_wing_cross_section_movement = ps.movement.WingCrossSectionMovement(
-    base_wing_cross_section=airplane.wings[0].wing_cross_sections[2],
+    base_wing_cross_section=airplane.wings[0].wing_cross_sections[3],
     sweeping_amplitude=60.0,
     sweeping_period=0.33,
     sweeping_spacing="sine",
@@ -259,7 +264,7 @@ example_operating_point = ps.operating_point.OperatingPoint(
     beta=0.0,
     # Define the freestream velocity at which the airplane is flying. This defaults
     # to 10.0 meters per second.
-    velocity=10.0,
+    velocity=4.2,
     # Define the angle of attack the airplane is experiencing. This defaults to 5.0
     # degrees.
     alpha=1.0,
@@ -348,7 +353,7 @@ ps.output.animate(  # Set the unsteady solver to the one we just ran.
     # Tell the animate function to not save the animation as file. This way,
     # the animation will still be displayed but not saved. This value defaults to
     # False.
-    save=False,
+    save=True,
 )
 
 # Compare the output you see with the expected outputs saved in the "docs/examples
