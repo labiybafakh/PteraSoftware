@@ -2,78 +2,133 @@ import pterasoftware as ps
 import numpy as np
 
 
-airplane = ps.geometry.Airplane(
+ornibibot = ps.geometry.airplane.Airplane(
     name="Flapping Bird",
+    Cg_GP1_CgP1=(0.0, 0.0, 0.0),
+    weight=0.38,
+    s_ref=None,
+    c_ref=None,
+    b_ref=None,
     wings=[
-        ps.geometry.Wing(
+        ps.geometry.wing.Wing(
             name="Main Wing",
+            Ler_Gs_Cgs=(0.0, 0.03, 0.0),
+            angles_Gs_to_Wn_ixyz=(0.0, 0.0, 0.0),
             symmetric=True,
-            num_chordwise_panels=8,
+            mirror_only=False,
+            symmetryNormal_G=(0.0, 1.0, 0.0),
+            symmetryPoint_G_Cg=(0.0, 0.0, 0.0),
+            num_chordwise_panels=6,
             chordwise_spacing="uniform",
             wing_cross_sections=[
-                ps.geometry.WingCrossSection(
-                    x_le=0.0,  # Leading edge x position
-                    y_le=0.0,  # Leading edge y position (root)
-                    z_le=0.0,  # Leading edge z position
-                    chord=0.32,  # Chord length in meters
-                    twist=0.0,  # Twist angle in degrees
-                    airfoil=ps.geometry.Airfoil(name="as6095"),
-                    num_spanwise_panels=4,
-                ),
-                ps.geometry.WingCrossSection(
-                    x_le=0.0,
-                    y_le=0.18,  
-                    z_le=0.0,
+                ps.geometry.wing_cross_section.WingCrossSection(
+                    num_spanwise_panels=8,
                     chord=0.32,
-                    twist=0.0,
-                    airfoil=ps.geometry.Airfoil(name="as6095"),
-                    num_spanwise_panels=4,
+                    Lp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+                    angles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+                    control_surface_symmetry_type="symmetric",
+                    control_surface_hinge_point=0.001,
+                    control_surface_deflection=0.0,
+                    spanwise_spacing="cosine",
+                    airfoil=ps.geometry.airfoil.Airfoil(
+                        name="AS6095",
+                        outline_A_lp=None,
+                        resample=True,
+                        n_points_per_side=400,
+                    ),
                 ),
-                ps.geometry.WingCrossSection(
-                    x_le=0.0,
-                    y_le=0.3,  
-                    z_le=0.0,
+                ps.geometry.wing_cross_section.WingCrossSection(
+                    num_spanwise_panels=8,
                     chord=0.32,
-                    twist=0.0,
-                    airfoil=ps.geometry.Airfoil(name="flat_plate"),
-                    num_spanwise_panels=4,
+                    Lp_Wcsp_Lpp=(0.0, 0.15, 0.0),
+                    angles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+                    control_surface_symmetry_type="symmetric",
+                    control_surface_hinge_point=0.001,
+                    control_surface_deflection=0.0,
+                    spanwise_spacing="cosine",
+                    airfoil=ps.geometry.airfoil.Airfoil(
+                        name="AS6095",
+                        outline_A_lp=None,
+                        resample=True,
+                        n_points_per_side=400,
+                    ),
                 ),
-                ps.geometry.WingCrossSection(
-                    x_le=0.0,
-                    y_le=0.75,  
-                    z_le=0.0,
-                    chord=0.01,
-                    twist=0.0,
-                    airfoil=ps.geometry.Airfoil(name="flat_plate"),
-                    num_spanwise_panels=4,
+                ps.geometry.wing_cross_section.WingCrossSection(
+                    num_spanwise_panels=8,
+                    chord=0.32,
+                    Lp_Wcsp_Lpp=(0.0, 0.3, 0.0),
+                    angles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+                    control_surface_symmetry_type="symmetric",
+                    control_surface_hinge_point=0.001,
+                    control_surface_deflection=0.0,
+                    spanwise_spacing="cosine",
+                    airfoil=ps.geometry.airfoil.Airfoil(
+                        name="AS6095",
+                        outline_A_lp=None,
+                        resample=True,
+                        n_points_per_side=400,
+                    ),
+                ),
+                ps.geometry.wing_cross_section.WingCrossSection(
+                    num_spanwise_panels=None,
+                    chord=0.001,
+                    Lp_Wcsp_Lpp=(0.0, 0.75, 0.0),
+                    angles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+                    control_surface_symmetry_type="symmetric",
+                    control_surface_hinge_point=0.001,
+                    control_surface_deflection=0.0,
+                    spanwise_spacing=None,
+                    airfoil=ps.geometry.airfoil.Airfoil(
+                        name="AS6095",
+                        outline_A_lp=None,
+                        resample=True,
+                        n_points_per_side=400,
+                    ),
                 ),
             ],
         ),
-        ps.geometry.Wing(
+        ps.geometry.wing.Wing(
             name="Tail",
-            x_le=0.45,
-            z_le=0.0,
-            num_chordwise_panels=6,
-            chordwise_spacing="cosine",
+            Ler_Gs_Cgs=(0.5, 0.0, 0.0),
+            angles_Gs_to_Wn_ixyz=(0.0, -5.0, 0.0),
             symmetric=True,
+            mirror_only=False,
+            symmetryNormal_G=(0.0, 1.0, 0.0),
+            symmetryPoint_G_Cg=(0.0, 0.0, 0.0),
+            num_chordwise_panels=6,
+            chordwise_spacing="uniform",
             # Define this wing's root wing cross section.
             wing_cross_sections=[
-                ps.geometry.WingCrossSection(
-                    x_le=0.0,
-                    y_le=0.0,
-                    z_le=0.0,
+                ps.geometry.wing_cross_section.WingCrossSection(
+                    num_spanwise_panels=8,
                     chord=0.3,
-                    airfoil=ps.geometry.Airfoil(
-                        name="flat_plate",
+                    Lp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+                    angles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+                    control_surface_symmetry_type="symmetric",
+                    control_surface_hinge_point=0.001,
+                    control_surface_deflection=0.0,
+                    spanwise_spacing="cosine",
+                    airfoil=ps.geometry.airfoil.Airfoil(
+                        name="2032c",
+                        outline_A_lp=None,
+                        resample=True,
+                        n_points_per_side=400,
                     ),
                 ),
-                ps.geometry.WingCrossSection(
-                    x_le=0.25,
-                    y_le=0.2,
-                    z_le=0.0,
+                ps.geometry.wing_cross_section.WingCrossSection(
+                    num_spanwise_panels=None,
                     chord=0.001,
-                    airfoil=ps.geometry.Airfoil(
-                        name="flat_plate",
+                    Lp_Wcsp_Lpp=(0.25, 0.2, 0.0),
+                    angles_Wcsp_to_Wcs_ixyz=(0.0, -20.0, 0.0),
+                    control_surface_symmetry_type="symmetric",
+                    control_surface_hinge_point=0.001,
+                    control_surface_deflection=0.0,
+                    spanwise_spacing=None,
+                    airfoil=ps.geometry.airfoil.Airfoil(
+                        name="2032c",
+                        outline_A_lp=None,
+                        resample=True,
+                        n_points_per_side=400,
                     ),
                 ),
             ],
@@ -81,280 +136,293 @@ airplane = ps.geometry.Airplane(
     ],
 )
 
-print(f"   Created airplane: {airplane.name}")
-print(f"   Number of wings: {len(airplane.wings)}")
-print(f"   Wing span: {airplane.wings[0].span:.2f} m")
+print(f"   Created airplane: {ornibibot.name}")
+print(f"   Number of wings: {len(ornibibot.wings)}")
+print(f"   Wing span: {ornibibot.wings[0].span:.2f} m")
 
 
 
-# Now define the main wing's root wing cross section's movement. Cross sections can
-# move in three ways: sweeping, pitching, and heaving. Sweeping is defined as the
-# relative rotation of this wing cross section's leading edge to its preceding wing
-# cross section's leading edge about the airplane's body x axis. Pitching is defined
-# as the relative rotation of this wing cross section's leading edge to the preceding
-# wing cross section's leading edge about the body y axis. Heaving is defined as the
-# relative rotation of this wing cross section's leading edge to the preceding wing
-# cross section's leading edge about the body z axis. The sign of all rotations is
-# determined via the right-hand-rule.
-main_wing_root_wing_cross_section_movement = ps.movement.WingCrossSectionMovement(
-    # Provide the base cross section.
-    base_wing_cross_section=airplane.wings[0].wing_cross_sections[0],
-    # Define the sweeping amplitude. This value is in degrees. As this is the first
-    # wing cross section, this must be 0.0 degrees, which is the default value.
-    sweeping_amplitude=0.0,
-    # Define the sweeping period. This value is in seconds. As this is the first wing
-    # cross section, this must be 0.0 seconds, which is the default value.
-    sweeping_period=0.0,
-    # Define the time step spacing of the sweeping. This is "sine" by default. The
-    # options are "sine" and "uniform".
-    sweeping_spacing="sine",
-    # Define the pitching amplitude. This value is in degrees. As this is the first
-    # wing cross section, this must be 0.0 degrees, which is the default value.
-    pitching_amplitude=0.0,
-    # Define the pitching period. This value is in seconds. As this is the first wing
-    # cross section, this must be 0.0 seconds, which is the default value.
-    pitching_period=0.0,
-    # Define the time step spacing of the pitching. This is "sine" by default. The
-    # options are "sine" and "uniform".
-    pitching_spacing="sine",
-    # Define the heaving amplitude. This value is in degrees. As this is the first
-    # wing cross section, this must be 0.0 degrees, which is the default value.
-    heaving_amplitude=0.0,
-    # Define the heaving period. This value is in seconds. As this is the first wing
-    # cross section, this must be 0.0 seconds, which is the default value.
-    heaving_period=0.0,
-    # Define the time step spacing of the heaving. This is "sine" by default. The
-    # options are "sine" and "uniform".
-    heaving_spacing="sine",
+# Now define the main wing's WingCrossSections' WingCrossSectionMovements for all 4 sections.
+main_wing_root_wing_cross_section_movement = (
+    ps.movements.wing_cross_section_movement.WingCrossSectionMovement(
+        base_wing_cross_section=ornibibot.wings[0].wing_cross_sections[0],
+        ampLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        periodLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        spacingLp_Wcsp_Lpp=("sine", "sine", "sine"),
+        phaseLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        ampAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        periodAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        spacingAngles_Wcsp_to_Wcs_ixyz=("sine", "sine", "sine"),
+        phaseAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+    )
+)
+main_wing_mid1_wing_cross_section_movement = (
+    ps.movements.wing_cross_section_movement.WingCrossSectionMovement(
+        base_wing_cross_section=ornibibot.wings[0].wing_cross_sections[1],
+        ampLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        periodLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        spacingLp_Wcsp_Lpp=("sine", "sine", "sine"),
+        phaseLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        ampAngles_Wcsp_to_Wcs_ixyz=(60.0, 0.0, 0.0),
+        periodAngles_Wcsp_to_Wcs_ixyz=(0.33, 0.0, 0.0),
+        spacingAngles_Wcsp_to_Wcs_ixyz=("sine", "sine", "sine"),
+        phaseAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+    )
+)
+main_wing_mid2_wing_cross_section_movement = (
+    ps.movements.wing_cross_section_movement.WingCrossSectionMovement(
+        base_wing_cross_section=ornibibot.wings[0].wing_cross_sections[2],
+        ampLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        periodLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        spacingLp_Wcsp_Lpp=("sine", "sine", "sine"),
+        phaseLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        ampAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        periodAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        spacingAngles_Wcsp_to_Wcs_ixyz=("sine", "sine", "sine"),
+        phaseAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+    )
+)
+main_wing_tip_wing_cross_section_movement = (
+    ps.movements.wing_cross_section_movement.WingCrossSectionMovement(
+        base_wing_cross_section=ornibibot.wings[0].wing_cross_sections[3],
+        ampLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        periodLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        spacingLp_Wcsp_Lpp=("sine", "sine", "sine"),
+        phaseLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        ampAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        periodAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        spacingAngles_Wcsp_to_Wcs_ixyz=("sine", "sine", "sine"),
+        phaseAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+    )
 )
 
-# Define the main wing's tip wing cross section's movement.
-main_wing_tip_wing_cross_section_movement = ps.movement.WingCrossSectionMovement(
-    base_wing_cross_section=airplane.wings[0].wing_cross_sections[3],
-    sweeping_amplitude=60.0,
-    sweeping_period=0.33,
-    sweeping_spacing="sine",
-    pitching_amplitude=15.0,
-    pitching_period=1.0,
-    pitching_spacing="sine",
-    heaving_amplitude=0.0,
-    heaving_period=0.0,
-    heaving_spacing="sine",
+# The main Wing was defined to have symmetric=True, mirror_only=False, and with a
+# symmetry plane offset non coincident with the Wing's axes yz plane. Therefore,
+# that Wing had type 5 symmetry (see the Wing class documentation for more details on
+# symmetry types). Therefore, it was actually split into two Wings, the with the
+# second Wing being a reflected version of the first. Therefore, we need to define a
+# WingMovement for this reflected Wing. To start, we'll first define the reflected
+# main wing's WingCrossSections' WingCrossSectionMovements for all sections.
+reflected_main_wing_root_wing_cross_section_movement = (
+    ps.movements.wing_cross_section_movement.WingCrossSectionMovement(
+        base_wing_cross_section=ornibibot.wings[1].wing_cross_sections[0],
+        ampLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        periodLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        spacingLp_Wcsp_Lpp=("sine", "sine", "sine"),
+        phaseLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        ampAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        periodAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        spacingAngles_Wcsp_to_Wcs_ixyz=("sine", "sine", "sine"),
+        phaseAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+    )
+)
+reflected_main_wing_mid1_wing_cross_section_movement = (
+    ps.movements.wing_cross_section_movement.WingCrossSectionMovement(
+        base_wing_cross_section=ornibibot.wings[1].wing_cross_sections[1],
+        ampLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        periodLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        spacingLp_Wcsp_Lpp=("sine", "sine", "sine"),
+        phaseLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        ampAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        periodAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        spacingAngles_Wcsp_to_Wcs_ixyz=("sine", "sine", "sine"),
+        phaseAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+    )
+)
+reflected_main_wing_mid2_wing_cross_section_movement = (
+    ps.movements.wing_cross_section_movement.WingCrossSectionMovement(
+        base_wing_cross_section=ornibibot.wings[1].wing_cross_sections[2],
+        ampLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        periodLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        spacingLp_Wcsp_Lpp=("sine", "sine", "sine"),
+        phaseLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        ampAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        periodAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        spacingAngles_Wcsp_to_Wcs_ixyz=("sine", "sine", "sine"),
+        phaseAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+    )
+)
+reflected_main_wing_tip_wing_cross_section_movement = (
+    ps.movements.wing_cross_section_movement.WingCrossSectionMovement(
+        base_wing_cross_section=ornibibot.wings[1].wing_cross_sections[3],
+        ampLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        periodLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        spacingLp_Wcsp_Lpp=("sine", "sine", "sine"),
+        phaseLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        ampAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        periodAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        spacingAngles_Wcsp_to_Wcs_ixyz=("sine", "sine", "sine"),
+        phaseAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+    )
 )
 
-# Define the v-tail's root wing cross section's movement. This wing will be static,
-# so the movement attributes can be excluded, and the default values will suffice.
-v_tail_root_wing_cross_section_movement = ps.movement.WingCrossSectionMovement(
-    base_wing_cross_section=airplane.wings[1].wing_cross_sections[0],
+# Now define the v tail's root and tip WingCrossSections' WingCrossSectionMovements.
+v_tail_root_wing_cross_section_movement = (
+    ps.movements.wing_cross_section_movement.WingCrossSectionMovement(
+        base_wing_cross_section=ornibibot.wings[2].wing_cross_sections[0],
+        ampLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        periodLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        spacingLp_Wcsp_Lpp=("sine", "sine", "sine"),
+        phaseLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        ampAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        periodAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        spacingAngles_Wcsp_to_Wcs_ixyz=("sine", "sine", "sine"),
+        phaseAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+    )
+)
+v_tail_tip_wing_cross_section_movement = (
+    ps.movements.wing_cross_section_movement.WingCrossSectionMovement(
+        base_wing_cross_section=ornibibot.wings[2].wing_cross_sections[1],
+        ampLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        periodLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        spacingLp_Wcsp_Lpp=("sine", "sine", "sine"),
+        phaseLp_Wcsp_Lpp=(0.0, 0.0, 0.0),
+        ampAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        periodAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+        spacingAngles_Wcsp_to_Wcs_ixyz=("sine", "sine", "sine"),
+        phaseAngles_Wcsp_to_Wcs_ixyz=(0.0, 0.0, 0.0),
+    )
 )
 
-# Define the v-tail's root wing cross section's movement. This wing will be static,
-# so the movement attributes can be excluded, and the default values will suffice.
-v_tail_tip_wing_cross_section_movement = ps.movement.WingCrossSectionMovement(
-    base_wing_cross_section=airplane.wings[1].wing_cross_sections[1],
-)
-
-# Now define the main wing's movement. In addition to their wing cross sections'
-# relative movements, wings' leading edge positions can move as well.
-main_wing_movement = ps.movement.WingMovement(  # Define the base wing object.
-    base_wing=airplane.wings[0],
-    # Add the list of wing cross section movement objects.
-    wing_cross_sections_movements=[
+# Now define the main wing's WingMovement, the reflected main wing's WingMovement and
+# the v tail's WingMovement.
+main_wing_movement = ps.movements.wing_movement.WingMovement(
+    base_wing=ornibibot.wings[0],
+    wing_cross_section_movements=[
         main_wing_root_wing_cross_section_movement,
+        main_wing_mid1_wing_cross_section_movement,
+        main_wing_mid2_wing_cross_section_movement,
         main_wing_tip_wing_cross_section_movement,
     ],
-    # Define the amplitude of the leading edge's change in x position. This value is
-    # in meters. This is set to 0.0 meters, which is the default value.
-    x_le_amplitude=0.0,
-    # Define the period of the leading edge's change in x position. This is set to
-    # 0.0 seconds, which is the default value.
-    x_le_period=0.0,
-    # Define the time step spacing of the leading edge's change in x position. This
-    # is "sine" by default. The options are "sine" and "uniform".
-    x_le_spacing="sine",
-    # Define the amplitude of the leading edge's change in y position. This value is
-    # in meters. This is set to 0.0 meters, which is the default value.
-    y_le_amplitude=0.0,
-    # Define the period of the leading edge's change in y position. This is set to
-    # 0.0 seconds, which is the default value.
-    y_le_period=0.0,
-    # Define the time step spacing of the leading edge's change in y position. This
-    # is "sine" by default. The options are "sine" and "uniform".
-    y_le_spacing="sine",
-    # Define the amplitude of the leading edge's change in z position. This value is
-    # in meters. This is set to 0.0 meters, which is the default value.
-    z_le_amplitude=0.0,
-    # Define the period of the leading edge's change in z position. This is set to
-    # 0.0 seconds, which is the default value.
-    z_le_period=0.0,
-    # Define the time step spacing of the leading edge's change in z position. This
-    # is "sine" by default. The options are "sine" and "uniform".
-    z_le_spacing="sine",
+    ampLer_Gs_Cgs=(0.0, 0.0, 0.0),
+    periodLer_Gs_Cgs=(0.0, 0.0, 0.0),
+    spacingLer_Gs_Cgs=("sine", "sine", "sine"),
+    phaseLer_Gs_Cgs=(0.0, 0.0, 0.0),
+    ampAngles_Gs_to_Wn_ixyz=(60.0, 0.0, 0.0),  # Reduced amplitude for smoother motion
+    periodAngles_Gs_to_Wn_ixyz=(0.33, 0.0, 0.0),   # Synchronized with reflected wing
+    spacingAngles_Gs_to_Wn_ixyz=("sine", "sine", "sine"),
+    phaseAngles_Gs_to_Wn_ixyz=(0.0, 0.0, 0.0),
 )
-
-# Delete the extraneous wing cross section movement objects, as these are now
-# contained within the wing movement object. This is unnecessary, but it can make
-# debugging easier.
-del main_wing_root_wing_cross_section_movement
-del main_wing_tip_wing_cross_section_movement
-
-# Make the v-tail's wing movement object.
-v_tail_movement = ps.movement.WingMovement(  # Define the base wing object.
-    base_wing=airplane.wings[1],
-    # Add the list of wing cross section movement objects.
-    wing_cross_sections_movements=[
+reflected_main_wing_movement = ps.movements.wing_movement.WingMovement(
+    base_wing=ornibibot.wings[1],
+    wing_cross_section_movements=[
+        reflected_main_wing_root_wing_cross_section_movement,
+        reflected_main_wing_mid1_wing_cross_section_movement,
+        reflected_main_wing_mid2_wing_cross_section_movement,
+        reflected_main_wing_tip_wing_cross_section_movement,
+    ],
+    ampLer_Gs_Cgs=(0.0, 0.0, 0.0),
+    periodLer_Gs_Cgs=(0.0, 0.0, 0.0),
+    spacingLer_Gs_Cgs=("sine", "sine", "sine"),
+    phaseLer_Gs_Cgs=(0.0, 0.0, 0.0),
+    ampAngles_Gs_to_Wn_ixyz=(60.0, 0.0, 0.0),  # Synchronized amplitude
+    periodAngles_Gs_to_Wn_ixyz=(0.33, 0.0, 0.0),  # Same period
+    spacingAngles_Gs_to_Wn_ixyz=("sine", "sine", "sine"),
+    phaseAngles_Gs_to_Wn_ixyz=(0.0, 0.0, 0.0),
+)
+v_tail_movement = ps.movements.wing_movement.WingMovement(
+    base_wing=ornibibot.wings[2],
+    wing_cross_section_movements=[
         v_tail_root_wing_cross_section_movement,
         v_tail_tip_wing_cross_section_movement,
     ],
+    ampLer_Gs_Cgs=(0.0, 0.0, 0.0),
+    periodLer_Gs_Cgs=(0.0, 0.0, 0.0),
+    spacingLer_Gs_Cgs=("sine", "sine", "sine"),
+    phaseLer_Gs_Cgs=(0.0, 0.0, 0.0),
+    ampAngles_Gs_to_Wn_ixyz=(0.0, 0.0, 0.0),
+    periodAngles_Gs_to_Wn_ixyz=(0.0, 0.0, 0.0),
+    spacingAngles_Gs_to_Wn_ixyz=("sine", "sine", "sine"),
+    phaseAngles_Gs_to_Wn_ixyz=(0.0, 0.0, 0.0),
 )
 
-# Delete the extraneous wing cross section movement objects, as these are now
-# contained within the wing movement object. This is unnecessary, but it can make
-# debugging easier.
+# Delete the extraneous pointers to the WingCrossSectionMovements, as these are now
+# contained within the WingMovements. This is optional, but it can make debugging
+# easier.
+del main_wing_root_wing_cross_section_movement
+del main_wing_mid1_wing_cross_section_movement
+del main_wing_mid2_wing_cross_section_movement
+del main_wing_tip_wing_cross_section_movement
+del reflected_main_wing_root_wing_cross_section_movement
+del reflected_main_wing_mid1_wing_cross_section_movement
+del reflected_main_wing_mid2_wing_cross_section_movement
+del reflected_main_wing_tip_wing_cross_section_movement
 del v_tail_root_wing_cross_section_movement
 del v_tail_tip_wing_cross_section_movement
 
-# Now define the airplane's movement object. In addition to their wing's and wing
-# cross sections' relative movements, airplane's reference positions can move as well.
-airplane_movement = ps.movement.AirplaneMovement(  # Define the base airplane object.
-    base_airplane=airplane,  # Add the list of wing movement objects.
-    wing_movements=[main_wing_movement, v_tail_movement],
-    # Define the amplitude of the reference position's change in x position. This
-    # value is in meters. This is set to 0.0 meters, which is the default value.
-    x_ref_amplitude=0.0,
-    # Define the period of the reference position's change in x position. This value
-    # is in seconds. This is set to 0.0 seconds, which is the default value.
-    x_ref_period=0.0,
-    # Define the time step spacing of the reference position's change in x position.
-    # This is "sine" by default. The options are "sine" and "uniform".
-    x_ref_spacing="sine",
-    # Define the amplitude of the reference position's change in y position. This
-    # value is in meters. This is set to 0.0 meters, which is the default value.
-    y_ref_amplitude=0.0,
-    # Define the period of the reference position's change in y position. This value
-    # is in seconds. This is set to 0.0 seconds, which is the default value.
-    y_ref_period=0.0,
-    # Define the time step spacing of the reference position's change in y position.
-    # This is "sine" by default. The options are "sine" and "uniform".
-    y_ref_spacing="sine",
-    # Define the amplitude of the reference position's change in z position. This
-    # value is in meters. This is set to 0.0 meters, which is the default value.
-    z_ref_amplitude=0.0,
-    # Define the period of the reference position's change in z position. This value
-    # is in seconds. This is set to 0.0 seconds, which is the default value.
-    z_ref_period=0.0,
-    # Define the time step spacing of the reference position's change in z position.
-    # This is "sine" by default. The options are "sine" and "uniform".
-    z_ref_spacing="sine",
+# Now define the example airplane's AirplaneMovement.
+airplane_movement = ps.movements.airplane_movement.AirplaneMovement(
+    base_airplane=ornibibot,
+    wing_movements=[main_wing_movement, reflected_main_wing_movement, v_tail_movement],
+    ampCg_GP1_CgP1=(0.0, 0.0, 0.0),
+    periodCg_GP1_CgP1=(0.0, 0.0, 0.0),
+    spacingCg_GP1_CgP1=("sine", "sine", "sine"),
+    phaseCg_GP1_CgP1=(0.0, 0.0, 0.0),
 )
 
-# Delete the extraneous wing movement objects, as these are now contained within the
-# airplane movement object.
+# Delete the extraneous pointers to the WingMovements.
 del main_wing_movement
+del reflected_main_wing_movement
 del v_tail_movement
 
-# Define a new operating point object. This defines the state at which the airplane
-# object is operating.
+# Define a new OperatingPoint.
 example_operating_point = ps.operating_point.OperatingPoint(
-    # Define the density of the fluid the airplane is flying in. This defaults to
-    # 1.225 kilograms per meters cubed.
-    density=1.225,
-    # Define the angle of sideslip the airplane is experiencing. This defaults to 0.0
-    # degrees.
-    beta=0.0,
-    # Define the freestream velocity at which the airplane is flying. This defaults
-    # to 10.0 meters per second.
-    velocity=4.2,
-    # Define the angle of attack the airplane is experiencing. This defaults to 5.0
-    # degrees.
-    alpha=1.0,
-    # Define the kinematic viscosity of the air in meters squared per second. This
-    # defaults to 15.06e-6 meters squared per second, which corresponds to an air
-    # temperature of 20 degrees Celsius.
-    nu=15.06e-6,
+    rho=1.225, vCg__E=4.2, alpha=1.0, beta=0.0, externalFX_W=0.0, nu=15.06e-6
 )
 
-# Define the operating point's movement. The operating point's velocity can change
-# with respect to time.
-operating_point_movement = ps.movement.OperatingPointMovement(
-    # Define the base operating point object.
-    base_operating_point=example_operating_point,
-    # Define the amplitude of the velocity's change in time. This value is set to 0.0
-    # meters per second, which is the default value.
-    velocity_amplitude=0.0,
-    # Define the period of the velocity's change in time. This value is set to 0.0
-    # seconds, which is the default value.
-    velocity_period=0.0,
-    # Define the time step spacing of the velocity's change in time. This is "sine"
-    # by default. The options are "sine" and "uniform".
-    velocity_spacing="sine",
+# Define the operating point's OperatingPointMovement.
+operating_point_movement = ps.movements.operating_point_movement.OperatingPointMovement(
+    base_operating_point=example_operating_point, periodVCg__E=0.0, spacingVCg__E="sine"
 )
 
-# Define the movement object. This contains the airplane movement and the operating
-# point movement.
-movement = ps.movement.Movement(  # Add the airplane movement.
-    airplane_movements=[airplane_movement],  # Add the operating point movement.
+# Delete the extraneous pointer.
+del example_operating_point
+
+# Define the Movement. This contains the AirplaneMovement and the
+# OperatingPointMovement.
+movement = ps.movements.movement.Movement(
+    airplane_movements=[airplane_movement],
     operating_point_movement=operating_point_movement,
-    # Leave the number of time steps and the length of each time step unspecified.
-    # The solver will automatically set the length of the time steps so that the wake
-    # ring vortices and the bound ring vortices have approximately the same area. The
-    # solver will also determine if the geometry is static or not. If it is static,
-    # the number of steps will be set such that the wake extends ten chord lengths
-    # back from the main wing. If the geometry isn't static, the number of steps will
-    # be set such that three periods of the slowest movement oscillation complete.
-    num_steps=None,
-    delta_time=None,
+    delta_time=0.001,
+    num_cycles=None,
+    num_chords=None,
+    num_steps=100,
 )
 
-# Delete the extraneous airplane and operating point movement objects, as these are
-# now contained within the movement object.
+# Delete the extraneous pointers.
 del airplane_movement
 del operating_point_movement
 
-# Define the unsteady example problem.
+# Define the UnsteadyProblem.
 example_problem = ps.problems.UnsteadyProblem(
     movement=movement,
 )
 
-# Define a new solver. The available solver objects are the steady horseshoe vortex
-# lattice method solver, the steady ring vortex lattice method solver, and the
-# unsteady ring vortex lattice method solver.
-example_solver = ps.unsteady_ring_vortex_lattice_method.UnsteadyRingVortexLatticeMethodSolver(
-    # Solvers just take in one attribute: the problem they are going to solve.
-    unsteady_problem=example_problem,
+# Define a new solver. The available solver classes are
+# SteadyHorseshoeVortexLatticeMethodSolver, SteadyRingVortexLatticeMethodSolver,
+# and UnsteadyRingVortexLatticeMethodSolver. We'll create an
+# UnsteadyRingVortexLatticeMethodSolver, which requires a UnsteadyProblem.
+example_solver = (
+    ps.unsteady_ring_vortex_lattice_method.UnsteadyRingVortexLatticeMethodSolver(
+        unsteady_problem=example_problem,
+    )
 )
 
-# Delete the extraneous pointer to the problem as it is now contained within the
-# solver.
+# Delete the extraneous pointer.
 del example_problem
 
-# Run the example solver.
+# Run the solver.
 example_solver.run(
-    # This parameter determines the detail of information that the solver's logger
-    # will output while running. The options are, in order of detail and severity,
-    # "Debug", "Info", "Warning", "Error", "Critical". The default value is "Warning".
-    logging_level="Warning",
-    # Use a prescribed wake model. This is faster, but may be slightly less accurate.
     prescribed_wake=True,
+    show_progress=True,
 )
 
-# Call the software's animate function on the solver. This produces a GIF of the wake
-# being shed. The GIF is saved in the same directory as this script. Press "q",
+# Call the animate function on the solver. This produces a GIF of the wake being
+# shed. The GIF is saved in the same directory as this script. Press "q",
 # after orienting the view, to begin the animation.
-ps.output.animate(  # Set the unsteady solver to the one we just ran.
+ps.output.animate(
     unsteady_solver=example_solver,
-    # Tell the animate function to color the aircraft's wing panels with the local
-    # lift coefficient. The valid arguments for this parameter are None, "induced drag",
-    # "side force", or "lift".
     scalar_type="lift",
-    # Tell the animate function to show the wake vortices. This value defaults to
-    # False.
     show_wake_vortices=True,
-    # Tell the animate function to not save the animation as file. This way,
-    # the animation will still be displayed but not saved. This value defaults to
-    # False.
-    save=True,
+    save=False,
 )
-
-# Compare the output you see with the expected outputs saved in the "docs/examples
-# expected output" directory.
